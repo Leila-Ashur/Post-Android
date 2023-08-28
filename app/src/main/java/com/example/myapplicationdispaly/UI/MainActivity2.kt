@@ -27,7 +27,7 @@ class MainActivity2 : AppCompatActivity() {
         super.onResume()
         postsViewModel.fetchedPosts()
         postsViewModel.postsLiveData.observe(this, Observer { postsList ->
-            var postAdapt = PostAdapter(postsList ?: emptyList())
+            var postAdapt = PostsAdapter(postsList ?: emptyList())
             binding.rvRecycler.layoutManager = LinearLayoutManager(this@MainActivity2)
             binding.rvRecycler.adapter = postAdapt
 
