@@ -8,15 +8,22 @@ import com.example.myapplicationdispaly.Model.Post
 import com.example.myapplicationdispaly.Repository.PostRepository
 import kotlinx.coroutines.launch
 
-class DisplayViewModel(private val repository: PostRepository) : ViewModel() {
+class DisplayViewModel() : ViewModel() {
+    var postsRepo=PostRepository()
+    var postsLiveData=MutableLiveData<List<Post>>()
+    var errorLiveData=MutableLiveData<String>()
 
-    private val _posts = MutableLiveData<List<Post>>()
-    val posts: LiveData<List<Post>> = _posts
-
-    init {
+    fun fetchedPosts(){
         viewModelScope.launch {
-            val fetchedPosts = repository.getPosts()
-            _posts.value = fetchedPosts
+            val response=postsRepo.getPosts()
+            if(response.isSuccessful){
+                val postsList=response.body()?: emptyList()
+                postsLiveData.postValue(postsList as
+                List<Post>)
+            }
+            else{
+                errorLiveData.postValue(response.errorBody()?.string())
+            }
         }
     }
 }

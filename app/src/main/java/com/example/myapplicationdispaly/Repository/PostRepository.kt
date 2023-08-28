@@ -2,25 +2,19 @@ package com.example.myapplicationdispaly.Repository
 
 import com.example.myapplicationdispaly.Model.Post
 import com.example.myapplicationdispaly.API.ApiClient
+import com.example.myapplicationdispaly.API.ApiInterface
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import retrofit2.Response
 
 class PostRepository {
-    suspend fun getPosts(): List<Post> {
-
-
-
-        try {
-            val response = ApiClient.retrofit.create(ApiService::class.java).getPosts()
-            if (response.isSuccessful) {
-                return response.body() ?: emptyList()
-            } else {
-
-                throw HttpException(response)
-            }
-        } catch (e: Exception) {
-
-            throw e
+    var apiClient= ApiClient.buildClient(ApiInterface::class.java)
+    suspend fun getPosts():Response<List<Post>> {
+        return withContext(Dispatchers.IO){
+            apiClient.getPosts()
         }
+
     }
 }
 
