@@ -10,7 +10,7 @@ import com.example.myapplicationdispaly.databinding.ListItemBinding
 
 
 class PostsAdapter(var postslist:List<Post>):RecyclerView.Adapter<PostsViewHolder>() {
-    lateinit var binding:ListItemBinding
+    lateinit var binding: ListItemBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsViewHolder {
         val binding=ListItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return PostsViewHolder(binding)
@@ -18,7 +18,7 @@ class PostsAdapter(var postslist:List<Post>):RecyclerView.Adapter<PostsViewHolde
     }
 
     override fun onBindViewHolder(holder: PostsViewHolder, position: Int) {
-        val currentPost=postslist[position]
+        var currentPost=postslist[position]
         val binding=holder.binding
         binding.tvTitle.text=currentPost.id.toString()
         binding.tvBody.text=currentPost.title
